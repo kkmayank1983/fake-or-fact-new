@@ -1,0 +1,24 @@
+<!DOCTYPE html>  <!-- HTML5 declaration -->
+<html lang="en">  <!-- Root element with language -->
+<head>
+  <meta charset="UTF-8">  <!-- Character encoding -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">  <!-- Responsive setup -->
+  <title>Fake or Fact?</title>  <!-- Browser tab title -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles_full.css') }}">  <!-- Link to CSS -->
+</head>
+<body>
+  <canvas id="matrix"></canvas>  <!-- Matrix background canvas -->
+  <div class="container">  <!-- Main UI container -->
+    <header class="header">
+      <h1>Fake or Fact?</h1>  <!-- Main title -->
+      <p class="subtitle"> AI-Powered Misinformation Detector</p>  <!-- Subtitle -->
+    </header>
+    <form class="check-form" method="POST" novalidate>  <!-- Input form -->
+      <label for="news_text">Paste your text here:</label>
+      <textarea id="news_text" name="news_text" rows="8" placeholder="Enter a paragraph..." required></textarea>
+      <button type="submit">Check</button>  <!-- Submit button -->
+    </form>
+    <div class="result-box">{{ result }}</div>  <!-- AI result box -->
+  </div>
+</body>
+</html>

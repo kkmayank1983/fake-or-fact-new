@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fake or Fact?</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles_full.css') }}">
+</head>
+<body>
+  <!-- Matrix background canvas -->
+  <canvas id="matrix"></canvas>
+
+  <!-- Main UI container -->
+  <div class="container">
+    <header class="header">
+      <h1>Fake or Fact?</h1>
+      <p class="subtitle">AI-Powered Misinformation Detector</p>
+    </header>
+
+    <form class="check-form" method="POST" novalidate>
+      <label for="news_text">Paste your text here:</label>
+      <textarea
+        id="news_text"
+        name="news_text"
+        rows="8"
+        placeholder="Enter a paragraph from a news article, social media post, etc."
+        required></textarea>
+      <button type="submit">Check</button>
+    </form>
+
+    {% if result %}
+    <div class="result-box">
+      <span class="result-label">Prediction:</span>
+      <span class="result-value">{{ result }}</span>
+    </div>
+    {% endif %}
+
+    {% if error %}
+    <div class="result-box" style="background-color: #fde8e8; border-left-color: #d9534f;">
+      <span class="result-label" style="color: #d9534f;">Error:</span>
+      <span class="result-value" style="color: #d9534f;">{{ error }}</span>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Matrix effect script -->
+  <script>
+    /**
+     * Matrix Falling Code effect
+     * Adapted from: https://github.com/andresz74/matrix :contentReference[oaicite:9]{index=9}
+     */
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+
+    // Fullscreen canvas
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Characters – letters, numbers, symbols
+    const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*()*&^%';
+    const fontSize = 16;  // px
+    const columns = Math.floor(canvas.width / fontSize);
+
+    // Array of drop positions (one per column)
+    const drops = Array(columns).fill(1);
+
+    function draw() {
+      // Translucent black overlay for trail effect
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#0F0';  // Green text
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+        const x = i * fontSize;
+        const y = drops[i] * fontSize;
+        ctx.fillText(text, x, y);
+
+        // Reset drop to top randomly after it goes off screen
+        if (y > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    // Animate at ~60fps
+    setInterval(draw, 33);
+
+    // Resize canvas on window resize
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
