@@ -9,8 +9,8 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  /* Hide scrollbars behind canvas */
-  overflow: hidden;
+  /* Allow vertical scrolling for content */
+  overflow-y: scroll; /* <--- THIS IS THE FIX */
   background: #000; /* Fallback if canvas fails */
 }
 
@@ -115,4 +115,46 @@ body {
 .result-value {
   font-size: 1.1rem;
   color: #007c91;
+}
+
+/* --- Authors Footer --- */
+.site-footer {
+  text-align: center;
+  margin-top: 25px;
+  padding-top: 25px;
+  border-top: 1px solid #ddd;
+}
+.site-footer h3 {
+  font-size: 1.2rem;
+  color: #007c91;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+.author-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 15px 0;
+}
+.author-list li {
+  background-color: #e8f7f9;
+  color: #005f6a;
+  padding: 6px 14px;
+  margin: 5px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+}
+.author-list li:hover {
+  background-color: #007c91;
+  color: #fff;
+  cursor: default;
+}
+.course-info {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 20px;
 }
